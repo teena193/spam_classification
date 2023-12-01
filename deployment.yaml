@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spam-detection
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spam-detection
+  template:
+    metadata:
+      labels:
+        app: spam-detection
+    spec:
+      containers:
+      - name: spam-detection
+        image: docker.io/teenajain193/spam:v1
+        ports:
+        - containerPort: 8000
