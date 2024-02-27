@@ -1,9 +1,18 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 from train import spam_detection
+import uvicorn
 
 # Create a FastAPI app
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Create a Pydantic model for the request payload
 class TextRequest(BaseModel):
@@ -24,7 +33,5 @@ def detect_spam(request: TextRequest):
     return result
 
 if __name__ == '__main__':
-    import uvicorn
-
     # Run the FastAPI app using Uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)

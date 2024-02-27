@@ -6,9 +6,12 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import LabelEncoder
 
-def spam_detection():
+import os
 
-    df = pd.read_csv('/app/spam.csv') #if running in docker
+def spam_detection():
+    file_path = os.environ.get('DATA_FILE_PATH', 'spam.csv')
+    
+    df = pd.read_csv(file_path) #if running in docker
     # Use LabelEncoder to convert 'Category' column to numerical labels
     label_encoder = LabelEncoder()
     df['label'] = label_encoder.fit_transform(df['Category'])
